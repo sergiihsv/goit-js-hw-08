@@ -17,6 +17,7 @@ refs.form.addEventListener('submit', onFormSubmit);
 
 function onInput(event) {
   formData[event.target.name] = event.target.value;
+
   localStorage.setItem(STORAGE_KEY, JSON.stringify(formData));
 }
 
@@ -24,15 +25,16 @@ function getStoredFormData() {
   const storedFormData = JSON.parse(localStorage.getItem(STORAGE_KEY));
 
   if (storedFormData) {
-    refs.textarea.value = storedFormData.message;
-    formData.message = storedFormData.message;
-    refs.input.value = storedFormData.email;
+    refs.textarea.value = storedFormData.message || '';
+    refs.input.value = storedFormData.email || '';
     formData.email = storedFormData.email;
+    formData.message = storedFormData.message;
   }
 }
 
 function onFormSubmit(event) {
   event.preventDefault();
   event.currentTarget.reset();
+  console.log(formData);
   localStorage.removeItem(STORAGE_KEY);
 }
